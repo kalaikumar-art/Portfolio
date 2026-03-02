@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Kalai Kumar R P</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f0e8;
+    --accent: #c8410a;
+    --muted: #7a7060;
+    --line: #d4ccba;
+    --card: #ede8dd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* Header */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 60px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'KK';
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(245,240,232,0.6);
+  }
+
+  .meta-item span {
+    display: block;
+    color: var(--paper);
+    font-size: 13px;
+    margin-top: 3px;
+  }
+
+  /* Nav dots */
+  .section-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    background: var(--card);
+  }
+
+  .section-nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 14px 24px;
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .section-nav a:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Layout */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Section */
+  .section {
+    padding: 64px 0 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  /* Profile grid */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .profile-cell {
+    background: var(--paper);
+    padding: 20px 24px;
+  }
+
+  .profile-cell.full {
+    grid-column: 1 / -1;
+  }
+
+  .cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .cell-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .cell-value.editable {
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  /* Skills */
+  .skills-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    cursor: default;
+    transition: all 0.15s;
+  }
+
+  .skill-tag:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Academic table */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .results-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 400;
+  }
+
+  .results-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .results-table tr:nth-child(even) td {
+    background: var(--card);
+  }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 24px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .card-accent {
+    width: 32px;
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .card-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .card-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tool-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--ink);
+    color: var(--paper);
+    letter-spacing: 0.5px;
+  }
+
+  /* Certification row */
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .cert-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .cert-row.header div {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cert-row div {
+    background: var(--paper);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Achievements */
+  .achieve-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .achieve-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .achieve-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--line);
+    line-height: 1;
+    min-width: 50px;
+  }
+
+  .achieve-content .achieve-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .achieve-content .achieve-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 80px;
+    padding: 24px 40px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .footer-right {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 24px 36px; }
+    .container { padding: 0 24px; }
+    .profile-grid { grid-template-columns: 1fr; }
+    .cert-row { grid-template-columns: 1fr; }
+    .hero-meta { gap: 20px; }
+    .section-nav a { padding: 12px 16px; font-size: 10px; }
+    .footer { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Student Portfolio · SRM Institute of Science and Technology</div>
+  <h1>Kalai Kumar<br>R P</h1>
+  <div class="hero-meta">
+    <div class="meta-item">Roll No<span>RA2411003050224</span></div>
+    <div class="meta-item">Email<span>kk2925@srmist.edu.in</span></div>
+    <div class="meta-item">Year<span>2024 Batch</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="section-nav">
+  <a href="#profile">01 Profile</a>
+  <a href="#academic">02 Academic</a>
+  <a href="#projects">03 Projects</a>
+  <a href="#certifications">04 Certifications</a>
+  <a href="#internship">05 Internship</a>
+  <a href="#achievements">06 Achievements</a>
+</nav>
+
+<div class="container">
+
+  <!-- SECTION 1: PROFILE -->
+  <div class="section" id="profile">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">Student Profile</h2>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-cell">
+        <div class="cell-label">Full Name</div>
+        <div class="cell-value">Kalai Kumar R P</div>
+      </div>
+      <div class="profile-cell">
+        <div class="cell-label">Roll Number</div>
+        <div class="cell-value">RA2411003050224</div>
+      </div>
+      <div class="profile-cell">
+        <div class="cell-label">Email Address</div>
+        <div class="cell-value">kk2925@srmist.edu.in</div>
+      </div>
+      <div class="profile-cell">
+        <div class="cell-label">Department</div>
+        <div class="cell-value editable">[ Enter Department ]</div>
+      </div>
+      <div class="profile-cell full">
+        <div class="cell-label">Skills</div>
+        <div class="skills-wrap">
+          <span class="skill-tag">+ Add Skill</span>
+          <span class="skill-tag">+ Add Skill</span>
+          <span class="skill-tag">+ Add Skill</span>
+          <span class="skill-tag">+ Add Skill</span>
+          <span class="skill-tag">+ Add Skill</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ACADEMIC -->
+  <div class="section" id="academic">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2 class="section-title">Academic Details</h2>
+    </div>
+    <table class="results-table" style="margin-bottom:24px">
+      <thead>
+        <tr>
+          <th>Semester</th>
+          <th>CGPA / GPA</th>
+          <th>Credits Earned</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Semester 1</td><td>—</td><td>—</td><td>[ Enter result ]</td></tr>
+        <tr><td>Semester 2</td><td>—</td><td>—</td><td>[ Enter result ]</td></tr>
+        <tr><td>Semester 3</td><td>—</td><td>—</td><td>[ Enter result ]</td></tr>
+        <tr><td>Semester 4</td><td>—</td><td>—</td><td>[ Enter result ]</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cell-label" style="margin-bottom:12px;letter-spacing:2px;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;color:var(--muted)">Courses Completed</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Course Name ]</div>
+        <div class="card-desc">[ Brief description or outcome ]</div>
+      </div>
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Course Name ]</div>
+        <div class="card-desc">[ Brief description or outcome ]</div>
+      </div>
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Course Name ]</div>
+        <div class="card-desc">[ Brief description or outcome ]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PROJECTS -->
+  <div class="section" id="projects">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Project Title ]</div>
+        <div class="card-sub">[ Duration / Status ]</div>
+        <div class="card-desc">[ Brief description of the project, its goals, and your role ]</div>
+        <div class="card-tools">
+          <span class="tool-badge">Tool</span>
+          <span class="tool-badge">Tool</span>
+          <span class="tool-badge">Tool</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Project Title ]</div>
+        <div class="card-sub">[ Duration / Status ]</div>
+        <div class="card-desc">[ Brief description of the project, its goals, and your role ]</div>
+        <div class="card-tools">
+          <span class="tool-badge">Tool</span>
+          <span class="tool-badge">Tool</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Project Title ]</div>
+        <div class="card-sub">[ Duration / Status ]</div>
+        <div class="card-desc">[ Brief description of the project, its goals, and your role ]</div>
+        <div class="card-tools">
+          <span class="tool-badge">Tool</span>
+          <span class="tool-badge">Tool</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: CERTIFICATIONS -->
+  <div class="section" id="certifications">
+    <div class="section-header">
+      <span class="section-num">04 —</span>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="cert-list">
+      <div class="cert-row header">
+        <div>Course Name</div>
+        <div>Platform</div>
+        <div>Date</div>
+      </div>
+      <div class="cert-row">
+        <div>[ Certification Name ]</div>
+        <div>[ Platform ]</div>
+        <div>[ MM / YYYY ]</div>
+      </div>
+      <div class="cert-row">
+        <div>[ Certification Name ]</div>
+        <div>[ Platform ]</div>
+        <div>[ MM / YYYY ]</div>
+      </div>
+      <div class="cert-row">
+        <div>[ Certification Name ]</div>
+        <div>[ Platform ]</div>
+        <div>[ MM / YYYY ]</div>
+      </div>
+      <div class="cert-row">
+        <div>[ Certification Name ]</div>
+        <div>[ Platform ]</div>
+        <div>[ MM / YYYY ]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: INTERNSHIP -->
+  <div class="section" id="internship">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2 class="section-title">Internship</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Company Name ]</div>
+        <div class="card-sub">[ Role ] · [ Duration ]</div>
+        <div class="card-desc">[ Describe the work done, technologies used, and key learnings during the internship ]</div>
+      </div>
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-title">[ Company Name ]</div>
+        <div class="card-sub">[ Role ] · [ Duration ]</div>
+        <div class="card-desc">[ Describe the work done, technologies used, and key learnings during the internship ]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: ACHIEVEMENTS -->
+  <div class="section" id="achievements">
+    <div class="section-header">
+      <span class="section-num">06 —</span>
+      <h2 class="section-title">Achievements</h2>
+    </div>
+    <div class="achieve-list">
+      <div class="achieve-item">
+        <div class="achieve-num">01</div>
+        <div class="achieve-content">
+          <div class="achieve-cat">Award</div>
+          <div class="achieve-title">[ Award Title — Awarding Body, Year ]</div>
+        </div>
+      </div>
+      <div class="achieve-item">
+        <div class="achieve-num">02</div>
+        <div class="achieve-content">
+          <div class="achieve-cat">Award</div>
+          <div class="achieve-title">[ Award Title — Awarding Body, Year ]</div>
+        </div>
+      </div>
+      <div class="achieve-item">
+        <div class="achieve-num">03</div>
+        <div class="achieve-content">
+          <div class="achieve-cat">Competition</div>
+          <div class="achieve-title">[ Competition Name — Position, Organizer, Year ]</div>
+        </div>
+      </div>
+      <div class="achieve-item">
+        <div class="achieve-num">04</div>
+        <div class="achieve-content">
+          <div class="achieve-cat">Competition</div>
+          <div class="achieve-title">[ Competition Name — Position, Organizer, Year ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <div class="footer-left">RA2411003050224 · kk2925@srmist.edu.in · SRM Institute of Science and Technology</div>
+  <div class="footer-right">KK</div>
+</div>
+
+</body>
+</html>
